@@ -1,0 +1,6 @@
+{
+  "name": "LDF Academy",
+  "description": "Plataforma Oficial de la Iniciativa Líderes del Futuro: centro inteligente de oportunidades académicas, mapa interactivo (Radar Educativo), cuestionario guiado (Ruta al Éxito), historias inspiradoras y asistente conversacional con IA (LDF Assistant).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
