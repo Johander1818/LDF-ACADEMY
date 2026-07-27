@@ -1,17 +1,15 @@
 import baseDeConocimiento from '../data/conocimiento.json';
 import React, { useState, useRef, useEffect } from 'react';
-import { GoogleGenAI } from '@google/genai';
 import { useApp } from '../context/AppContext';
 import { Logo } from './Logo';
 import { ChatMessage } from '../types';
-import { Send, X, Sparkles, Loader2 } from 'lucide-react';
+import { Send, X, Sparkles } from 'lucide-react';
 
 export const LDFAssistant: React.FC = () => {
   const {
     currentUser,
     isAssistantOpen,
     setIsAssistantOpen,
-    opportunities,
   } = useApp();
 
   const [messages, setMessages] = useState<ChatMessage[]>(() => [
@@ -19,20 +17,18 @@ export const LDFAssistant: React.FC = () => {
       id: 'msg-init',
       sender: 'assistant',
       text: currentUser?.name
-        ? `¡Hola ${currentUser.name}! Soy **LDF Assistant**, tu orientador académico oficial. ¿En qué puedo ayudarte hoy? Puedo informarte sobre el Campamento Internacional Juvenil, LDF Academy, becas en República Dominicana, talleres STEAM o resolución de dudas.`
-        : '¡Hola! Bienvenido a LDF Academy y al Campamento Internacional Juvenil. Soy **LDF Assistant**, tu orientador con Inteligencia Artificial. ¿En qué área o beca universitaria te gustaría recibir información hoy?',
+        ? `¡Hola ${currentUser.name}! Soy **LDF Assistant**, tu centro de consulta informativa. Hazme una pregunta sobre el Campamento Internacional Juvenil, LDF Academy o Becas.`
+        : '¡Hola! Bienvenido a LDF Academy. Soy **LDF Assistant**, tu centro de orientación. Selecciona una opción o escribe tu duda sobre el Campamento, becas o cursos.',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
 
   const [inputText, setInputText] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isLoading]);
+  }, [messages]);
 
   const quickChips = [
     '¿Qué es el Campamento Internacional Juvenil?',
@@ -41,9 +37,58 @@ export const LDFAssistant: React.FC = () => {
     'Contacto oficial e Instagram',
   ];
 
-  const handleSendMessage = async (textToSend?: string) => {
+  // Función para buscar respuestas directamente en el JSON sin usar IA
+  const buscarRespuestaEnConocimiento = (consulta: string): string => {
+    const textoNormalizado = consulta.toLowerCase().trim();
+
+    // 1. Buscar en la lista de Preguntas Frecuentes (FAQ)
+    if (baseDeConocimiento.preguntas_frecuentes) {
+      for (const faq of baseDeConocimiento.preguntas_frecuentes) {
+        if (
+          textoNormalizado.includes(faq.pregunta.toLowerCase()) ||
+          faq.pregunta.toLowerCase().includes(textoNormalizado)
+        ) {
+          return faq.respuesta;
+        }
+      }
+    }
+
+    // 2. Buscar por palabras clave específicas
+    if (textoNormalizado.includes('campamento')) {
+      const camp = baseDeConocimiento.programas_oficiales?.campamento_internacional_juvenil;
+      if (camp) {
+        return `**${camp.nombre}**\n\n${camp.descripcion}\n\n**Modalidad:** ${camp.modalidad}\n**Enfoque:** ${camp.enfoque_principal}`;
+      }
+    }
+
+    if (textoNormalizado.includes('beca') || textoNormalizado.includes('mescyt') || textoNormalizado.includes('juventud')) {
+      const becas = baseDeConocimiento.oportunidades_y_becas_rd;
+      if (becas) {
+        return `**Oportunidades de Becas en RD:**\n\n- **MESCYT:** ${becas.becas_mescyt?.descripcion}\n- **Ministerio de la Juventud:** ${becas.becas_ministerio_juventud?.descripcion}\n- **ITLA:** ${becas.becas_itla?.descripcion}`;
+      }
+    }
+
+    if (textoNormalizado.includes('contacto') || textoNormalizado.includes('instagram') || textoNormalizado.includes('redes')) {
+      const redes = baseDeConocimiento.contacto_y_canales_oficiales;
+      if (redes) {
+        return `Puedes contactarnos a través de:\n- **Instagram:** ${redes.instagram}\n- **Correo:** ${redes.correo_soporte}\n- **Sede:** ${redes.sede_principal}`;
+      }
+    }
+
+    if (textoNormalizado.includes('mun') || textoNormalizado.includes('naciones unidas') || textoNormalizado.includes('diplomacia')) {
+      const mun = baseDeConocimiento.programas_oficiales?.modelos_naciones_unidas_ldf;
+      if (mun) {
+        return `**Modelos de Naciones Unidas (MUN LDF):**\n${mun.descripcion}\n\n**Talleres incluidos:** ${mun.talleres_incluidos?.join(', ')}`;
+      }
+    }
+
+    // Respuesta por defecto si no encuentra coincidencia exacta
+    return "No encontré una respuesta exacta para tu consulta. Te invitamos a escribirnos a nuestra cuenta oficial de Instagram **@lideresfuturo2026** para brindarte asistencia personalizada.";
+  };
+
+  const handleSendMessage = (textToSend?: string) => {
     const query = textToSend || inputText;
-    if (!query.trim() || isLoading) return;
+    if (!query.trim()) return;
 
     const userMsg: ChatMessage = {
       id: `msg-${Date.now()}`,
@@ -52,67 +97,17 @@ export const LDFAssistant: React.FC = () => {
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
 
-    setMessages((prev) => [...prev, userMsg]);
+    const respuestaLocal = buscarRespuestaEnConocimiento(query);
+
+    const assistantMsg: ChatMessage = {
+      id: `msg-${Date.now() + 1}`,
+      sender: 'assistant',
+      text: respuestaLocal,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    };
+
+    setMessages((prev) => [...prev, userMsg, assistantMsg]);
     if (!textToSend) setInputText('');
-    setIsLoading(true);
-
-    const fallbackText = "Para esta consulta no cuento con una respuesta exacta en este momento. Puedes contactarnos a través de nuestra cuenta oficial de Instagram **@lideresfuturo2026** para brindarte una asistencia personalizada.";
-
-    try {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-
-      if (!apiKey) {
-        console.error("VITE_GEMINI_API_KEY no se encuentra definida en el entorno.");
-        throw new Error("Clave de API no disponible");
-      }
-
-      const ai = new GoogleGenAI({ apiKey });
-
-      const systemInstruction = `
-Eres LDF Assistant, el asistente virtual y orientador académico oficial del "Campamento Internacional Juvenil" y "Líderes del Futuro" (LDF Academy).
-
-BASE DE CONOCIMIENTO OFICIAL (FUENTES DE INFORMACIÓN Y PREGUNTAS FRECUENTES):
-${JSON.stringify(baseDeConocimiento, null, 2)}
-
-LISTADO DE OPORTUNIDADES DINÁMICAS REGISTRADAS:
-${JSON.stringify(opportunities, null, 2)}
-
-INSTRUCCIONES DE RESPUESTA:
-1. Responde de forma cordial, clara, motivadora y profesional.
-2. Utiliza prioritaria y exhaustivamente la información del JSON "BASE DE CONOCIMIENTO OFICIAL" para responder dudas sobre el Campamento Internacional Juvenil, Líderes del Futuro (LDF Academy), Modelos de Naciones Unidas (MUN), becas (MESCYT, Juventud, INFOTEP, ITLA, etc.), requisitos académicos, redacción de ensayos y talleres de tecnología.
-3. Si el usuario pregunta algo sobre un trámite personal específico, un expediente particular o un dato puntual que NO figure en la base de conocimientos, responde amablemente derivando al Instagram oficial:
-"${fallbackText}"
-`;
-
-      const response = await ai.models.generateContent({
-        model: 'gemini-1.5-flash',
-        contents: `${systemInstruction}\n\nPregunta del usuario: ${query}`,
-      });
-
-      const assistantReply = response.text?.trim() || fallbackText;
-
-      const assistantMsg: ChatMessage = {
-        id: `msg-${Date.now() + 1}`,
-        sender: 'assistant',
-        text: assistantReply,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      };
-
-      setMessages((prev) => [...prev, assistantMsg]);
-    } catch (err) {
-      console.error("Error en LDF Assistant:", err);
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: `msg-err-${Date.now()}`,
-          sender: 'assistant',
-          text: fallbackText,
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        },
-      ]);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
@@ -121,11 +116,10 @@ INSTRUCCIONES DE RESPUESTA:
       <div className="fixed bottom-6 right-6 z-40">
         <button
           onClick={() => setIsAssistantOpen(!isAssistantOpen)}
-          className="relative p-3.5 rounded-full bg-gradient-to-r from-[#2E1B0F] via-[#4A2F1A] to-[#2E1B0F] text-white shadow-2xl ring-2 ring-[#D4AF37] gold-glow hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group"
-          title="Abrir LDF Assistant (IA)"
+          className="relative p-3.5 rounded-full bg-gradient-to-r from-[#2E1B0F] via-[#4A2F1A] to-[#2E1B0F] text-white shadow-2xl ring-2 ring-[#D4AF37] hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center"
+          title="Centro de Consulta LDF"
         >
           <Logo size="sm" />
-          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-[#D4AF37] border-2 border-[#18110B] animate-pulse" />
         </button>
       </div>
 
@@ -142,7 +136,7 @@ INSTRUCCIONES DE RESPUESTA:
                   <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
                 </h3>
                 <p className="text-[10px] text-gray-300">
-                  {currentUser?.name ? `Atendiendo a ${currentUser.name}` : 'Orientador Académico con IA'}
+                  Centro de Información y Orientación
                 </p>
               </div>
             </div>
@@ -158,14 +152,6 @@ INSTRUCCIONES DE RESPUESTA:
           {/* Lista de Mensajes */}
           <div className="flex-1 p-4 overflow-y-auto space-y-4 text-xs">
             {messages.map((msg) => {
-              if (msg.sender === 'system') {
-                return (
-                  <div key={msg.id} className="p-3 rounded-2xl bg-[#B8860B]/10 border border-[#B8860B]/30 text-[#2E1B0F] dark:text-[#D4AF37] font-medium text-[11px] text-center">
-                    {msg.text}
-                  </div>
-                );
-              }
-
               const isUser = msg.sender === 'user';
               return (
                 <div
@@ -188,14 +174,6 @@ INSTRUCCIONES DE RESPUESTA:
                 </div>
               );
             })}
-
-            {isLoading && (
-              <div className="flex items-center space-x-2 text-gray-400 text-xs py-2">
-                <Loader2 className="w-4 h-4 animate-spin text-[#B8860B]" />
-                <span>LDF Assistant está consultando la información...</span>
-              </div>
-            )}
-
             <div ref={messagesEndRef} />
           </div>
 
@@ -225,12 +203,12 @@ INSTRUCCIONES DE RESPUESTA:
                 type="text"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                placeholder="Escribe tu consulta sobre becas o cursos..."
+                placeholder="Escribe tu consulta sobre el campamento o becas..."
                 className="flex-1 px-4 py-2.5 rounded-full bg-gray-100 dark:bg-[#251810] text-xs text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#B8860B]"
               />
               <button
                 type="submit"
-                disabled={!inputText.trim() || isLoading}
+                disabled={!inputText.trim()}
                 className="p-2.5 rounded-full bg-[#B8860B] hover:bg-[#D4AF37] text-white disabled:opacity-40 transition-colors shadow-xs"
               >
                 <Send className="w-4 h-4" />
