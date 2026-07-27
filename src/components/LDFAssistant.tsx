@@ -1,3 +1,4 @@
+import baseDeConocimiento from '../data/conocimiento.json';
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI } from '@google/genai';
 import { useApp } from '../context/AppContext';
@@ -18,8 +19,8 @@ export const LDFAssistant: React.FC = () => {
       id: 'msg-init',
       sender: 'assistant',
       text: currentUser?.name
-        ? `¡Hola ${currentUser.name}! Soy **LDF Assistant**, tu orientador académico oficial. ¿En qué puedo ayudarte hoy? Puedo informarte sobre becas universitarias en República Dominicana e internacionales, u orientarte sobre nuestra iniciativa.`
-        : '¡Hola! Bienvenido a LDF Academy. Soy **LDF Assistant**, tu orientador con Inteligencia Artificial. ¿En qué área académica o beca universitaria te gustaría recibir información hoy?',
+        ? `¡Hola ${currentUser.name}! Soy **LDF Assistant**, tu orientador académico oficial. ¿En qué puedo ayudarte hoy? Puedo informarte sobre el Campamento Internacional Juvenil, LDF Academy, becas en República Dominicana, talleres STEAM o resolución de dudas.`
+        : '¡Hola! Bienvenido a LDF Academy y al Campamento Internacional Juvenil. Soy **LDF Assistant**, tu orientador con Inteligencia Artificial. ¿En qué área o beca universitaria te gustaría recibir información hoy?',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -34,8 +35,8 @@ export const LDFAssistant: React.FC = () => {
   }, [messages, isLoading]);
 
   const quickChips = [
-    '¿Quiénes fundaron la iniciativa Líderes del Futuro?',
-    '¿Qué becas universitarias en RD tienen convocatoria abierta?',
+    '¿Qué es el Campamento Internacional Juvenil?',
+    '¿Qué becas hay disponibles en RD?',
     '¿Cómo me preparo para solicitar una beca?',
     'Contacto oficial e Instagram',
   ];
@@ -68,22 +69,19 @@ export const LDFAssistant: React.FC = () => {
       const ai = new GoogleGenAI({ apiKey });
 
       const systemInstruction = `
-Eres LDF Assistant, el asistente virtual y orientador académico oficial de "Líderes del Futuro" (LDF Academy).
+Eres LDF Assistant, el asistente virtual y orientador académico oficial del "Campamento Internacional Juvenil" y "Líderes del Futuro" (LDF Academy).
 
-SOBRE LA INICIATIVA LÍDERES DEL FUTURO:
-- Es una iniciativa/plataforma enfocada en conectar estudiantes dominicanos e internacionales con oportunidades educativas, becas universitarias, convocatorias reales y guía académica para su desarrollo personal y profesional.
-- Cuenta con herramientas como radar de oportunidades, rutas al éxito y orientación impulsada por inteligencia artificial.
-- Redes/Contacto: Instagram oficial **@lideresfuturo2026**.
+BASE DE CONOCIMIENTO OFICIAL (FUENTES DE INFORMACIÓN Y PREGUNTAS FRECUENTES):
+${JSON.stringify(baseDeConocimiento, null, 2)}
+
+LISTADO DE OPORTUNIDADES DINÁMICAS REGISTRADAS:
+${JSON.stringify(opportunities, null, 2)}
 
 INSTRUCCIONES DE RESPUESTA:
 1. Responde de forma cordial, clara, motivadora y profesional.
-2. Si te preguntan sobre la iniciativa "Líderes del Futuro" o LDF Academy, explica con entusiasmo nuestro propósito de orientar a estudiantes con becas y desarrollo académico.
-3. Si te preguntan sobre becas u oportunidades específicas que SÍ estén en nuestro listado o que sean temas generales de orientación académica (como consejos para postular a becas), respóndelas con claridad.
-4. ÚNICAMENTE si te preguntan sobre un trámite específico, beca o dato muy puntual que NO tengas registrado y requiera soporte personalizado directo, responde EXACTAMENTE:
+2. Utiliza prioritaria y exhaustivamente la información del JSON "BASE DE CONOCIMIENTO OFICIAL" para responder dudas sobre el Campamento Internacional Juvenil, Líderes del Futuro (LDF Academy), Modelos de Naciones Unidas (MUN), becas (MESCYT, Juventud, INFOTEP, ITLA, etc.), requisitos académicos, redacción de ensayos y talleres de tecnología.
+3. Si el usuario pregunta algo sobre un trámite personal específico, un expediente particular o un dato puntual que NO figure en la base de conocimientos, responde amablemente derivando al Instagram oficial:
 "${fallbackText}"
-
-LISTADO DE OPORTUNIDADES DISPONIBLES:
-${JSON.stringify(opportunities, null, 2)}
 `;
 
       const response = await ai.models.generateContent({

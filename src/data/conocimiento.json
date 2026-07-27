@@ -1,0 +1,298 @@
+{
+  "institucion_matriz": {
+    "nombre_oficial": "Campamento Internacional Juvenil",
+    "programa_academico_asociado": "Líderes del Futuro (LDF Academy)",
+    "siglas": "CIJ / LDF Academy",
+    "mision": "Conectar, capacitar y potenciar a la juventud dominicana e internacional mediante programas de liderazgo, excelencia académica, diplomacia, orientación integral de becas y tecnología.",
+    "vision": "Constituirse en la principal red juvenil y plataforma de preparación integral de América Latina y el Caribe para la formación de líderes de alto impacto social.",
+    "valores": [
+      "Excelencia Académica",
+      "Liderazgo Transformador",
+      "Inclusión y Diversidad",
+      "Integridad y Ética",
+      "Innovación Tecnológica",
+      "Compromiso Social",
+      "Pensamiento Crítico"
+    ],
+    "canales_oficiales": {
+      "instagram": "@lideresfuturo2026",
+      "atencion_estudiantil": "Mensajería directa en Instagram oficial (@lideresfuturo2026) o plataforma web.",
+      "cobertura": "República Dominicana e intercambios académicos internacionales."
+    }
+  },
+  "campamento_internacional_juvenil": {
+    "descripcion": "Iniciativa cumbre de formación intensiva y convivencia de jóvenes líderes donde se desarrollan competencias clave en debate, oratoria, liderazgo, geopolítica, diplomacia y tecnología.",
+    "formatos": [
+      "Bootcamps intensivos presenciales con alojamiento o modalidad diurna",
+      "Talleres prácticos, seminarios web y simposios",
+      "Simulaciones de diplomacia y Modelos de Naciones Unidas (MUN)",
+      "Capacitaciones virtuales interactivas y mentores personalizados"
+    ],
+    "ejes_formativos": [
+      "Liderazgo Global, Diplomacia y Modelos de Naciones Unidas",
+      "Orientación Académica, Redacción de Ensayos y Postulación a Becas",
+      "Habilidades STEAM, Programación, Bases de Datos e Inteligencia Artificial",
+      "Oratoria, Debate y Argumentación Jurídico-Político",
+      "Emprendimiento Social, Proyectos de Impacto Comunitario y Voluntariado"
+    ]
+  },
+  "preguntas_frecuentes_campamento_y_ldf": [
+    {
+      "categoria": "General e Institucional",
+      "pregunta": "¿Qué es Líderes del Futuro (LDF Academy)?",
+      "respuesta": "Es la academia y brazo educativo asociado al Campamento Internacional Juvenil, enfocada en brindar orientación académica, formación en liderazgo, preparación para becas y desarrollo de habilidades STEAM."
+    },
+    {
+      "categoria": "General e Institucional",
+      "pregunta": "¿Qué relación existe entre Líderes del Futuro y el Campamento Internacional Juvenil?",
+      "respuesta": "Líderes del Futuro funciona como la plataforma de continuidad pedagógica, preparación de postulantes y seguimiento académico permanente del Campamento Internacional Juvenil."
+    },
+    {
+      "categoria": "General e Institucional",
+      "pregunta": "¿Tiene algún costo participar en las capacitaciones?",
+      "respuesta": "La gran mayoría de las orientaciones, webinars, guías digitales y talleres son totalmente gratuitos. Para eventos especiales o campamentos presenciales que requieran hospedaje y materiales físicos, se anuncian becas parciales y totales en los canales oficiales."
+    },
+    {
+      "categoria": "Inscripción y Participación",
+      "pregunta": "¿Cuáles son los requisitos para unirse al Campamento Internacional Juvenil o a LDF Academy?",
+      "respuesta": "Ser estudiante de secundaria, universitario o joven profesional entre 13 y 35 años, completar el formulario oficial de inscripción y demostrar interés en desarrollar habilidades de liderazgo y excelencia académica."
+    },
+    {
+      "categoria": "Inscripción y Participación",
+      "pregunta": "¿Cómo puedo inscribirme a las actividades?",
+      "respuesta": "A través de las convocatorias publicadas periódicamente en la cuenta oficial de Instagram @lideresfuturo2026 y en la plataforma web de la iniciativa."
+    },
+    {
+      "categoria": "Inscripción y Participación",
+      "pregunta": "¿Se otorgan certificados de participación?",
+      "respuesta": "Sí, todos los participantes que completen satisfactoriamente los talleres, bootcamps o simulaciones reciben un certificado oficial avalado por la dirección ejecutiva del evento."
+    },
+    {
+      "categoria": "Inscripción y Participación",
+      "pregunta": "¿Puedo participar si no vivo en Santo Domingo o si estoy en el interior del país?",
+      "respuesta": "¡Sí! Nuestras actividades cuentan con modalidades virtuales e híbridas diseñadas para estudiantes de todas las provincias de la República Dominicana y del exterior."
+    },
+    {
+      "categoria": "Diplomacia y MUN",
+      "pregunta": "¿Ofrecen preparación para Modelos de Naciones Unidas (MUN)?",
+      "respuesta": "Sí, contamos con módulos especializados en argumentación jurídica, redacción de documentos de posición, cláusulas preambulatorias y resolutivas, técnica parlamentaria y oratoria para debates distritales, nacionales e internacionales."
+    },
+    {
+      "categoria": "Diplomacia y MUN",
+      "pregunta": "¿Qué herramientas me dan para redactar un anteproyecto de resolución en un MUN?",
+      "respuesta": "Enseñamos a formular cláusulas preambulatorias basándose en instrumentos internacionales (declaraciones, tratados y resoluciones de la ONU) y cláusulas resolutivas con acciones operativas concretas y viables."
+    },
+    {
+      "categoria": "STEAM y Tecnología",
+      "pregunta": "¿Qué capacitaciones ofrecen en el área tecnológica?",
+      "respuesta": "Guiamos a los estudiantes en rutas de aprendizaje sobre programación, modelado de bases de datos, desarrollo web, uso ético y práctico de Inteligencia Artificial, ciberseguridad y obtención de certificaciones internacionales becadas."
+    },
+    {
+      "categoria": "STEAM y Tecnología",
+      "pregunta": "¿Necesito experiencia previa en programación para unirme a las capacitaciones STEAM?",
+      "respuesta": "No, nuestras capacitaciones abarcan desde nivel principiante (lógica de programación y conceptos básicos) hasta niveles intermedios y avanzados en desarrollo de software."
+    }
+  ],
+  "guia_completa_becas_y_oportunidades_rd": [
+    {
+      "institucion": "Ministerio de Educación Superior, Ciencia y Tecnología (MESCYT)",
+      "siglas": "MESCYT",
+      "tipo": "Gubernamental / Educación Superior",
+      "oportunidades": [
+        "Becas Nacionales (cobertura del 100% de la matrícula en universidades dominicanas como UASD, PUCMM, INTEC, UNIBE, UNPHU, UNAPEC, ISA, UNICARIBE, etc.)",
+        "Becas Internacionales (grados, maestrías y doctorados en España, EE. UU., Reino Unido, Francia, Colombia, Brasil, entre otros)",
+        "Programa de Inglés por Inmersión para Competitividad (10 meses intensivos)",
+        "Concurso Nacional de Innovación de la Educación Superior"
+      ],
+      "requisitos_generales": "Ser ciudadano dominicano, promedio mínimo de 80/100 en secundaria o índice universitario acumulado de 3.0/4.0, copia de cédula o pasaporte, récord de notas legalizado, carta de intención y formulario de solicitud online."
+    },
+    {
+      "institucion": "Ministerio de la Juventud",
+      "siglas": "MJ",
+      "tipo": "Gubernamental / Juventud",
+      "oportunidades": [
+        "Programa 'Beca Tu Futuro'",
+        "Programa Generación STEAM (Becas focalizadas en tecnología, ingenierías y ciencias exactas)",
+        "Ventanilla Única de Oportunidades (VUO)",
+        "Capacitaciones en emprendimiento, intercambios culturales y apoyo a proyectos de líderes jóvenes"
+      ],
+      "requisitos_generales": "Jóvenes dominicanos entre 15 y 35 años, récord académico meritorio, carta de solicitud motivada y formulario oficial en el portal."
+    },
+    {
+      "institucion": "Instituto Nacional de Formación Técnico Profesional (INFOTEP)",
+      "siglas": "INFOTEP",
+      "tipo": "Educación Técnica Gratuita",
+      "oportunidades": [
+        "Cursos técnicos presenciales en talleres y centros tecnológicos regionales",
+        "INFOTEP Virtual (Cursos en informática, administración, marketing digital, contabilidad, etc.)",
+        "Certificaciones laborales y técnicos superiores para jóvenes y profesionales"
+      ],
+      "requisitos_generales": "Tener 16 años o más, copia de cédula de identidad o pasaporte y certificado de escolaridad (según el nivel del curso). Cobertura 100% gratuita."
+    },
+    {
+      "institucion": "Instituto Tecnológico de las Américas (ITLA)",
+      "siglas": "ITLA",
+      "tipo": "Educación Tecnológica Superior",
+      "oportunidades": [
+        "Carreras Tecnológicas de 2 años (Desarrollo de Software, Ciberseguridad, IA, Mecatrónica, Redes de Datos, Simulaciones Interactivas)",
+        "Bootcamps intensivos de diplomados y educación continua",
+        "Programa de Becas de Educación Continua (convocatorias especiales del Estado)"
+      ],
+      "requisitos_generales": "Aprobar exámenes de admisión y nivelación, récord de notas de secundaria, cédula de identidad y solicitud formal."
+    },
+    {
+      "institucion": "ISFODOSU / MINERD",
+      "siglas": "ISFODOSU",
+      "tipo": "Universidad Pedagógica de Excelencia",
+      "oportunidades": [
+        "Becas de Excelencia para Licenciatura en Educación (100% cobertura de matrícula)",
+        "Estipendio de manutención mensual para estudiantes",
+        "Alojamiento (según recinto) y formación integral con enfoque pedagógico moderno"
+      ],
+      "requisitos_generales": "Superar las pruebas POMA y PAAN, índice de secundaria sobresaliente y compromiso de dedicación a tiempo completo."
+    },
+    {
+      "institucion": "INDOTEL y Centros Tecnológicos Comunitarios (CTC)",
+      "siglas": "INDOTEL / CTC",
+      "tipo": "Inclusión Digital y Robótica",
+      "oportunidades": [
+        "Talleres de Robótica Educativa, Programación y MakerSpaces para Jóvenes",
+        "Cursos de alfabetización digital y desarrollo comunitario",
+        "Capacitaciones becadas en instalación de Fibra Óptica, Telecomunicaciones y Redes"
+      ]
+    },
+    {
+      "institucion": "OGTIC (Oficina Gubernamental de Tecnologías de la Información y Comunicación)",
+      "siglas": "OGTIC",
+      "tipo": "Gubernamental",
+      "oportunidades": [
+        "Programa Código RD (formación acelerada en desarrollo de software y computación en la nube)",
+        "Certificaciones internacionales becadas en alianza con AWS, Python Institute, Microsoft y Google Cloud"
+      ]
+    },
+    {
+      "institucion": "ProDominicana y MICM",
+      "siglas": "ProDominicana / MICM",
+      "tipo": "Comercio, Exportación e Industria",
+      "oportunidades": [
+        "Diplomados en Comercio Internacional, Exportación y Logística",
+        "Capital semilla y capacitaciones para emprendimientos tecnológicos e industriales liderados por jóvenes"
+      ]
+    },
+    {
+      "institucion": "Ministerio de Cultura y Ministerio de Medio Ambiente",
+      "siglas": "MINC / MIMARENA",
+      "tipo": "Cultura y Sostenibilidad",
+      "oportunidades": [
+        "Becas en Bellas Artes, Cine, Música, Teatro y Gestión Cultural",
+        "Programa de Voluntariado Ambiental Nacional y becas de especialización en gestión de recursos naturales"
+      ]
+    }
+  ],
+  "universidades_y_fondos_de_excelencia_rd": [
+    {
+      "entidad": "UASD (Universidad Autónoma de Santo Domingo)",
+      "detalles": "Programa de Becas de Monitoría, asistencia académica, laboratorios de investigación y convenios de movilidad con universidades de América Latina y Europa."
+    },
+    {
+      "entidad": "PUCMM (Pontificia Universidad Católica Madre y Maestra)",
+      "detalles": "Programa de Becas de Honor, Créditos Educativos a través de la Fundación Madre y Maestra para estudiantes con elevado rendimiento académico."
+    },
+    {
+      "entidad": "INTEC (Instituto Tecnológico de Santo Domingo)",
+      "detalles": "Programa PIEX (INTEC con el Estudiante de Excelencia) para becas completas en ingenierías, áreas de la salud, economía y negocios."
+    },
+    {
+      "entidad": "UNIBE (Universidad Iberoamericana)",
+      "detalles": "Programa de Becas 'Líderes del Mañana', convenios de doble titulación internacional y proyectos de innovación."
+    },
+    {
+      "entidad": "UNPHU (Universidad Nacional Pedro Henríquez Ureña)",
+      "detalles": "Becas de Excelencia en Medicina, Arquitectura, Ciencias Agropecuarias, Veterinaria e Ingenierías."
+    },
+    {
+      "entidad": "UNAPEC (Universidad APEC)",
+      "detalles": "Becas de Idiomas, certificaciones internacionales y programas de formación ejecutiva."
+    },
+    {
+      "entidad": "Universidad ISA (Santiago)",
+      "detalles": "Becas integrales que incluyen matrícula, hospedaje y alimentación para carreras de Agronomía, Ciencias Agropecuarias y Veterinaria."
+    },
+    {
+      "entidad": "Banco Central de la República Dominicana",
+      "detalles": "Becas para Maestrías en Economía y Finanzas, Concurso de Economía Juan Pablo Duarte y programas de pasantías académicas."
+    },
+    {
+      "entidad": "Banco Popular Dominicano",
+      "detalles": "Programa 'Excelencia Popular', otorgando becas universitarias completas a estudiantes meritorios de todo el país."
+    },
+    {
+      "entidad": "Banreservas",
+      "detalles": "Becas de Excelencia Académica y Liderazgo Youth, talleres de educación financiera y fondos de apoyo al emprendimiento juvenil."
+    }
+  ],
+  "organismos_e_intercambios_internacionales": [
+    {
+      "programa": "Fulbright (Embajada de los Estados Unidos en RD)",
+      "descripcion": "Becas completas de maestría y doctorado en universidades de Estados Unidos, financiadas en conjunto con el MESCYT."
+    },
+    {
+      "programa": "Programa SUSI (Study of the U.S. Institutes)",
+      "descripcion": "Intercambio intensivo de liderazgo juvenil de 5 a 6 semanas en universidades de Estados Unidos durante la época de verano."
+    },
+    {
+      "programa": "Becas Chevening (Reino Unido)",
+      "descripcion": "Financiamiento total para cursar maestrías de 1 año en cualquier universidad del Reino Unido para futuros líderes."
+    },
+    {
+      "programa": "Fundación Carolina (España)",
+      "descripcion": "Becas de posgrado, doctorado y estancias de investigación en prestigiosas universidades españolas."
+    },
+    {
+      "programa": "DAAD (Servicio Alemán de Intercambio Académico)",
+      "descripcion": "Becas para estudios de grado, maestría y doctorado en Alemania con programas en idioma inglés y alemán."
+    },
+    {
+      "programa": "Becas OEA - MESCYT",
+      "descripcion": "Oportunidades de posgrado financiado en universidades aliadas de los países miembros de la OEA."
+    },
+    {
+      "programa": "Becas del Gobierno de Corea (GKS / NIIED) y Japón (MEXT)",
+      "descripcion": "Becas integrales que cubren año de idioma, carrera universitaria, pasaje aéreo y estipendio de manutención mensual."
+    }
+  ],
+  "preguntas_frecuentes_orientacion_de_becas": [
+    {
+      "pregunta": "¿Qué documentos debo ir preparando si quiero aplicar a una beca?",
+      "respuesta": "Récord de notas oficial legalizado, copia de cédula de identidad o pasaporte vigente, acta de nacimiento inextensa, curriculum vitae en formato Harvard/Europass, carta de motivación o ensayo de intención, y 2 o 3 cartas de recomendación (académica, laboral o comunitaria)."
+    },
+    {
+      "pregunta": "¿Qué promedio o índice académico necesito para asegurar una beca?",
+      "respuesta": "Para becas nacionales se exige un mínimo de 80 a 85 puntos en secundaria. Para becas internacionales (como Fulbright, Chevening o Fundación Carolina) se recomienda mantener un índice universitario superior a 3.2/4.0 o equivalente."
+    },
+    {
+      "pregunta": "¿Cómo redactar una carta de motivación o ensayo exitoso?",
+      "respuesta": "Estructúralo en tres partes: 1) Quién eres y cuáles son tus logros sobresalientes, 2) Por qué elegiste este programa específico y cómo encaja en tus metas profesionales, y 3) Cómo vas a aplicar los conocimientos adquiridos para generar un impacto positivo en la República Dominicana."
+    },
+    {
+      "pregunta": "¿Qué debo hacer si no tengo experiencia laboral al aplicar a una beca de posgrado?",
+      "respuesta": "Destaca tus actividades extracurriculares, voluntariados, participación en Modelos de Naciones Unidas, liderazgo estudiantil, monitorías universitarias y proyectos académicos o de investigación."
+    },
+    {
+      "pregunta": "¿Cómo me preparo para una entrevista de beca internacional?",
+      "respuesta": "Investiga a fondo la institución que otorga la beca, practica tus respuestas sobre tus fortalezas y debilidades, ten claros tus planes a futuro y demuestra seguridad, humildad y un fuerte compromiso con el desarrollo de tu país."
+    },
+    {
+      "pregunta": "¿Dónde puedo consultar la apertura oficial de becas gubernamentales en RD?",
+      "respuesta": "En la Ventanilla Única de Oportunidades (VUO) y en los portales oficiales del MESCYT (becas.gob.do) y del Ministerio de la Juventud."
+    },
+    {
+      "pregunta": "¿El Inglés por Inmersión del MESCYT otorga certificado?",
+      "respuesta": "Sí, al culminar los 10 meses del programa y aprobar los exámenes finales, el MESCYT otorga un certificado oficial con validez nacional e internacional que acredita tu nivel de dominio del idioma."
+    }
+  ],
+  "protocolo_fallbacks_y_respuestas": {
+    "regla_de_oro": "Si el usuario realiza una pregunta sobre fechas específicas de convocatorias no listadas, trámites personales directos, estado de expedientes individuales o temas no contemplados en este JSON, el asistente debe responder cordialmente derivando al canal oficial de atención.",
+    "texto_fallback_obligatorio": "Para obtener una asistencia personalizada o verificar el estatus de tu caso particular, te invitamos a escribirnos directamente a nuestro Instagram oficial **@lideresfuturo2026** o comunicarte con el equipo de coordinación del Campamento Internacional Juvenil / LDF Academy."
+  }
+}
