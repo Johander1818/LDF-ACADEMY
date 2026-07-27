@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { GoogleGenAI } from '@google/genai';
 import { useApp } from '../context/AppContext';
 import { Logo } from './Logo';
 import { ChatMessage } from '../types';
@@ -60,8 +61,12 @@ export const LDFAssistant: React.FC = () => {
       const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
       if (!apiKey) {
-        throw new Error("VITE_GEMINI_API_KEY no configurada");
+        console.error("VITE_GEMINI_API_KEY no se encuentra definida en el entorno.");
+        throw new Error("Clave de API no disponible");
       }
+
+      // Inicializar el SDK oficial de Google Gen AI
+      const ai = new GoogleGenAI({ apiKey });
 
       const systemInstruction = `
 Eres LDF Assistant, la IA y orientador académico oficial de "Líderes del Futuro" (LDF Academy).
@@ -77,29 +82,12 @@ OPORTUNIDADES DISPONIBLES EN LA PLATAFORMA:
 ${JSON.stringify(opportunities, null, 2)}
 `;
 
-      // Endpoint oficial REST compatible
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [
-              {
-                role: 'user',
-                parts: [{ text: `${systemInstruction}\n\nPregunta: ${query}` }]
-              }
-            ]
-          })
-        }
-      );
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: `${systemInstruction}\n\nPregunta del usuario: ${query}`,
+      });
 
-      if (!response.ok) {
-        throw new Error(`Error en API Gemini: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const assistantReply = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || fallbackText;
+      const assistantReply = response.text?.trim() || fallbackText;
 
       const assistantMsg: ChatMessage = {
         id: `msg-${Date.now() + 1}`,
