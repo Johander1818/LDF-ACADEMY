@@ -54,7 +54,7 @@ export const LDFAssistant: React.FC = () => {
     if (!textToSend) setInputText('');
     setIsLoading(true);
 
-    const fallbackText = "Para esta consulta no cuento con una respuesta exacta en este momento. Puedes contactarnos a través de nuestra cuenta oficial de Instagram **@lideresfuturo2026** o vía correo a **johander181818@gmail.com** para brindarte una asistencia personalizada.";
+    const fallbackText = "Para esta consulta no cuento con una respuesta exacta en este momento. Puedes contactarnos a través de nuestra cuenta oficial de Instagram **@lideresfuturo2026** para brindarte una asistencia personalizada.";
 
     try {
       const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
@@ -72,7 +72,6 @@ REGLA OBLIGATORIA:
 
 DATOS DE LA INICIATIVA:
 - Instagram: @lideresfuturo2026
-- Correo: johander181818@gmail.com
 
 OPORTUNIDADES DISPONIBLES EN LA PLATAFORMA:
 ${JSON.stringify(opportunities, null, 2)}
