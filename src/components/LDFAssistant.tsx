@@ -3,7 +3,6 @@ import { useApp } from '../context/AppContext';
 import { Logo } from './Logo';
 import { ChatMessage } from '../types';
 import { Send, X, Sparkles, Loader2 } from 'lucide-react';
-import { GoogleGenAI } from '@google/genai';
 
 export const LDFAssistant: React.FC = () => {
   const {
@@ -33,7 +32,6 @@ export const LDFAssistant: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
 
-  // Quick suggestion chips
   const quickChips = [
     '¿Quiénes fundaron la iniciativa Líderes del Futuro?',
     '¿Qué becas universitarias en RD tienen convocatoria abierta?',
@@ -56,62 +54,70 @@ export const LDFAssistant: React.FC = () => {
     if (!textToSend) setInputText('');
     setIsLoading(true);
 
+    const fallbackText = "Para esta consulta no cuento con una respuesta exacta en este momento. Puedes contactarnos a través de nuestra cuenta oficial de Instagram **@lideresfuturo2026** o vía correo a **johander181818@gmail.com** para brindarte una asistencia personalizada.";
+
     try {
       const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
       if (!apiKey) {
-        throw new Error("API Key no configurada.");
+        throw new Error("VITE_GEMINI_API_KEY no configurada");
       }
 
-      const ai = new GoogleGenAI({ apiKey });
-
       const systemInstruction = `
-Eres LDF Assistant, la Inteligencia Artificial y orientador académico oficial de "Líderes del Futuro" (LDF Academy).
-Tu tono es educado, inspirador, empático y directo.
+Eres LDF Assistant, la IA y orientador académico oficial de "Líderes del Futuro" (LDF Academy).
 
-REGLA FUNDAMENTAL PARA CUANDO NO TENGAS RESPUESTA EXACTA:
-- Si el usuario te pregunta algo de lo que no posees información exacta, precisa o confirmada en tu base de datos, NO inventes respuestas.
-- En su lugar, debes responder amablemente diciendo exactamente:
-  "Para esta consulta no cuento con una respuesta exacta en este momento. Puedes contactarnos a través de nuestra cuenta oficial de Instagram **@lideresfuturo2026** o vía correo a **johander181818@gmail.com** para brindarte una asistencia personalizada."
+REGLA OBLIGATORIA:
+- Si te preguntan algo de lo que NO posees información exacta, confirmada o presente en el listado de oportunidades, responde EXACTAMENTE:
+"${fallbackText}"
 
-DATOS OFICIALES DE LA INICIATIVA:
-- Iniciativa: Líderes del Futuro (LDF Academy).
-- Propósito: Orientación académica, convocatorias de becas verificadas y desarrollo integral de los jóvenes (ODS 4 ONU).
+DATOS DE LA INICIATIVA:
 - Instagram: @lideresfuturo2026
-- Correo oficial: johander181818@gmail.com
+- Correo: johander181818@gmail.com
 
-INFORMACIÓN DE BECAS Y OPORTUNIDADES DISPONIBLES:
+OPORTUNIDADES DISPONIBLES EN LA PLATAFORMA:
 ${JSON.stringify(opportunities, null, 2)}
 `;
 
-      const conversationHistory = messages
-        .filter((m) => m.sender !== 'system')
-        .map((m) => `${m.sender === 'user' ? 'Usuario' : 'Asistente'}: ${m.text}`)
-        .join('\n');
+      // Petición REST directa a la API de Gemini
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [
+              {
+                role: 'user',
+                parts: [{ text: `${systemInstruction}\n\nPregunta: ${query}` }]
+              }
+            ]
+          })
+        }
+      );
 
-      const fullPrompt = `${systemInstruction}\n\nHISTORIAL DE CHAT:\n${conversationHistory}\nUsuario: ${query}\nAsistente:`;
+      if (!response.ok) {
+        throw new Error(`Error en API Gemini: ${response.status}`);
+      }
 
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: fullPrompt,
-      });
+      const data = await response.json();
+      const assistantReply = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || fallbackText;
 
       const assistantMsg: ChatMessage = {
         id: `msg-${Date.now() + 1}`,
         sender: 'assistant',
-        text: response.text || 'Puedes contactarnos a través de nuestra cuenta de Instagram **@lideresfuturo2026** para obtener más información.',
+        text: assistantReply,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
 
       setMessages((prev) => [...prev, assistantMsg]);
     } catch (err) {
-      console.error(err);
+      console.error("Error en LDF Assistant:", err);
       setMessages((prev) => [
         ...prev,
         {
           id: `msg-err-${Date.now()}`,
           sender: 'assistant',
-          text: 'No pude obtener una respuesta exacta en este momento. Puedes contactarnos directamente a través de nuestra cuenta de Instagram **@lideresfuturo2026** o escribirnos al correo **johander181818@gmail.com**.',
+          text: fallbackText,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         },
       ]);
@@ -122,7 +128,7 @@ ${JSON.stringify(opportunities, null, 2)}
 
   return (
     <>
-      {/* Floating Action Button */}
+      {/* Botón flotante */}
       <div className="fixed bottom-6 right-6 z-40">
         <button
           onClick={() => setIsAssistantOpen(!isAssistantOpen)}
@@ -134,10 +140,10 @@ ${JSON.stringify(opportunities, null, 2)}
         </button>
       </div>
 
-      {/* Floating Chat Modal Drawer */}
+      {/* Ventana Modal de Chat */}
       {isAssistantOpen && (
         <div className="fixed inset-y-0 right-0 sm:right-6 sm:bottom-20 sm:inset-y-auto sm:w-[420px] sm:h-[620px] z-50 bg-white dark:bg-[#1C120C] border border-gray-200 dark:border-[#2E1B0F] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col justify-between overflow-hidden animate-in slide-in-from-bottom duration-300">
-          {/* Header */}
+          {/* Cabecera */}
           <div className="p-4 bg-gradient-to-r from-[#2E1B0F] to-[#4A2F1A] text-white flex items-center justify-between border-b border-[#B8860B]/30">
             <div className="flex items-center space-x-3">
               <Logo size="sm" />
@@ -160,7 +166,7 @@ ${JSON.stringify(opportunities, null, 2)}
             </button>
           </div>
 
-          {/* Messages Body */}
+          {/* Lista de Mensajes */}
           <div className="flex-1 p-4 overflow-y-auto space-y-4 text-xs">
             {messages.map((msg) => {
               if (msg.sender === 'system') {
@@ -204,7 +210,7 @@ ${JSON.stringify(opportunities, null, 2)}
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Suggestion Chips */}
+          {/* Chips de sugerencia rápida */}
           <div className="px-3 py-2 bg-gray-50/50 dark:bg-[#130D08]/50 border-t border-gray-100 dark:border-[#2E1B0F] overflow-x-auto flex space-x-1.5 scrollbar-none">
             {quickChips.map((chip, idx) => (
               <button
@@ -217,7 +223,7 @@ ${JSON.stringify(opportunities, null, 2)}
             ))}
           </div>
 
-          {/* Chat Input Footer */}
+          {/* Formulario de envío */}
           <div className="p-3 bg-white dark:bg-[#1C120C] border-t border-gray-200 dark:border-[#2E1B0F]">
             <form
               onSubmit={(e) => {
