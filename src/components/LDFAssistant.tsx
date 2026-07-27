@@ -65,7 +65,6 @@ export const LDFAssistant: React.FC = () => {
         throw new Error("Clave de API no disponible");
       }
 
-      // Inicializar el SDK oficial de Google Gen AI
       const ai = new GoogleGenAI({ apiKey });
 
       const systemInstruction = `
@@ -82,8 +81,9 @@ OPORTUNIDADES DISPONIBLES EN LA PLATAFORMA:
 ${JSON.stringify(opportunities, null, 2)}
 `;
 
+      // MODELO ACTUALIZADO Y DISPONIBLE
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-1.5-flash',
         contents: `${systemInstruction}\n\nPregunta del usuario: ${query}`,
       });
 
