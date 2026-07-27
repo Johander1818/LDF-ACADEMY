@@ -2,12 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { Logo } from './Logo';
 import { ChatMessage } from '../types';
-import {
-  Send,
-  X,
-  Sparkles,
-  Loader2
-} from 'lucide-react';
+import { Send, X, Sparkles, Loader2 } from 'lucide-react';
+import { GoogleGenAI } from '@google/genai';
 
 export const LDFAssistant: React.FC = () => {
   const {
@@ -61,32 +57,49 @@ export const LDFAssistant: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/assistant/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: [...messages, userMsg].map((m) => ({
-            role: m.sender === 'assistant' ? 'model' : 'user',
-            text: m.text,
-          })),
-          userName: currentUser?.name,
-          opportunitiesContext: opportunities.map((o) => ({
-            id: o.id,
-            title: o.title,
-            institution: o.institution,
-            type: o.type,
-            country: o.country,
-            deadline: o.deadline,
-          })),
-        }),
-      });
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
-      const data = await response.json();
+      if (!apiKey) {
+        throw new Error("API Key no configurada.");
+      }
+
+      const ai = new GoogleGenAI({ apiKey });
+
+      const systemInstruction = `
+Eres LDF Assistant, la Inteligencia Artificial y orientador académico oficial de "Líderes del Futuro" (LDF Academy).
+Tu tono es educado, inspirador, empático y directo.
+
+REGLA FUNDAMENTAL PARA CUANDO NO TENGAS RESPUESTA EXACTA:
+- Si el usuario te pregunta algo de lo que no posees información exacta, precisa o confirmada en tu base de datos, NO inventes respuestas.
+- En su lugar, debes responder amablemente diciendo exactamente:
+  "Para esta consulta no cuento con una respuesta exacta en este momento. Puedes contactarnos a través de nuestra cuenta oficial de Instagram **@lideresfuturo2026** o vía correo a **johander181818@gmail.com** para brindarte una asistencia personalizada."
+
+DATOS OFICIALES DE LA INICIATIVA:
+- Iniciativa: Líderes del Futuro (LDF Academy).
+- Propósito: Orientación académica, convocatorias de becas verificadas y desarrollo integral de los jóvenes (ODS 4 ONU).
+- Instagram: @lideresfuturo2026
+- Correo oficial: johander181818@gmail.com
+
+INFORMACIÓN DE BECAS Y OPORTUNIDADES DISPONIBLES:
+${JSON.stringify(opportunities, null, 2)}
+`;
+
+      const conversationHistory = messages
+        .filter((m) => m.sender !== 'system')
+        .map((m) => `${m.sender === 'user' ? 'Usuario' : 'Asistente'}: ${m.text}`)
+        .join('\n');
+
+      const fullPrompt = `${systemInstruction}\n\nHISTORIAL DE CHAT:\n${conversationHistory}\nUsuario: ${query}\nAsistente:`;
+
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: fullPrompt,
+      });
 
       const assistantMsg: ChatMessage = {
         id: `msg-${Date.now() + 1}`,
         sender: 'assistant',
-        text: data.text || 'He recibido tu mensaje. ¿Hay alguna otra consulta sobre becas u orientación académica en la que pueda colaborarte?',
+        text: response.text || 'Puedes contactarnos a través de nuestra cuenta de Instagram **@lideresfuturo2026** para obtener más información.',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
 
@@ -98,7 +111,7 @@ export const LDFAssistant: React.FC = () => {
         {
           id: `msg-err-${Date.now()}`,
           sender: 'assistant',
-          text: 'Actualmente me encuentro procesando muchas consultas. Puedes escribirnos directamente a nuestro correo de los fundadores: johander181818@gmail.com o a nuestro Instagram @lideresfuturo2026.',
+          text: 'No pude obtener una respuesta exacta en este momento. Puedes contactarnos directamente a través de nuestra cuenta de Instagram **@lideresfuturo2026** o escribirnos al correo **johander181818@gmail.com**.',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         },
       ]);
@@ -109,7 +122,7 @@ export const LDFAssistant: React.FC = () => {
 
   return (
     <>
-      {/* Floating Action Button with LDF Logo (RF-AST-01) */}
+      {/* Floating Action Button */}
       <div className="fixed bottom-6 right-6 z-40">
         <button
           onClick={() => setIsAssistantOpen(!isAssistantOpen)}
@@ -121,7 +134,7 @@ export const LDFAssistant: React.FC = () => {
         </button>
       </div>
 
-      {/* Floating Chat Modal Drawer (RF-AST-02) */}
+      {/* Floating Chat Modal Drawer */}
       {isAssistantOpen && (
         <div className="fixed inset-y-0 right-0 sm:right-6 sm:bottom-20 sm:inset-y-auto sm:w-[420px] sm:h-[620px] z-50 bg-white dark:bg-[#1C120C] border border-gray-200 dark:border-[#2E1B0F] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col justify-between overflow-hidden animate-in slide-in-from-bottom duration-300">
           {/* Header */}
